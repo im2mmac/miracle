@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101819">
+  <meta name="description" content="카메라 속 내 모습으로 홍해 장면에 들어가 손을 들어 바닷길을 열어보세요.">
+  <title>모세의 기적 · 홍해</title>
+  <link rel="icon" type="image/jpeg" href="./assets/ocean.jpg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./studio.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        홍해 스튜디오
+      </div>
+      <span id="camera-badge" class="camera-badge" data-state="off">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="camera-status">카메라 꺼짐</span>
+      </span>
+    </div>
+  </header>
+
+  <main>
+    <section class="heading" aria-labelledby="title">
+      <div>
+        <h1 id="title">모세의 기적</h1>
+        <p>카메라 속 내 모습으로 홍해에 들어가, 손을 들어 바닷길을 열어보세요.</p>
+      </div>
+      <button id="camera-toggle" class="button primary" type="button">
+        <span class="camera-icon" aria-hidden="true"></span><span id="camera-button-text">카메라 시작</span>
+      </button>
+    </section>
+
+    <div class="workspace">
+      <section class="viewer" aria-label="홍해 장면">
+        <div id="stage" class="stage" data-scene="idle">
+          <video id="ocean" src="./assets/red-sea-parting.mp4" poster="./assets/ocean.jpg"
+            muted playsinline preload="auto" aria-label="홍해가 갈라지는 영상"></video>
+          <canvas id="performer" width="1280" height="720" aria-hidden="true"></canvas>
+          <canvas id="landmarks" width="1280" height="720" aria-hidden="true"></canvas>
+          <div class="shade" aria-hidden="true"></div>
+          <div id="guide" class="guide" hidden aria-hidden="true"><span>손목 기준선</span></div>
+          <span id="scene-status" class="scene-status">재생 대기</span>
+          <button id="fullscreen" type="button" class="fullscreen button" title="전체 화면"
+            aria-label="전체 화면"><span class="fullscreen-icon" aria-hidden="true"></span></button>
+          <div id="stage-prompt" class="stage-prompt">카메라를 시작하면 이 장면에 내 모습이 나타나요.</div>
+        </div>
+        <div class="timeline" aria-hidden="true"><span id="clip-progress"></span></div>
+        <div class="transport">
+          <button id="preview" class="button secondary" type="button">
+            <span class="play-icon" aria-hidden="true"></span><span id="preview-text">영상 미리보기</span>
+          </button>
+          <button id="reset" class="button quiet" type="button" disabled>처음으로</button>
+          <span id="clip-time" class="clip-time">0:00 / 0:08</span>
+        </div>
+      </section>
+
+      <aside class="controls" aria-labelledby="controls-title">
+        <h2 id="controls-title">손 인식</h2>
+        <div class="tracking" aria-live="polite">
+          <span id="tracking-dot" class="status-dot" aria-hidden="true"></span>
+          <span id="tracking-status">카메라 대기 중</span>
+        </div>
+        <div class="gesture-meter" aria-hidden="true"><span id="gesture-progress"></span></div>
+        <div class="range-control">
+          <div class="range-heading">
+            <label for="threshold">손목 기준선 높이</label>
+            <output id="threshold-value" for="threshold">40%</output>
+          </div>
+          <input id="threshold" type="range" min="20" max="65" value="40"
+            aria-describedby="threshold-help">
+          <p id="threshold-help">카메라 화면 위에서부터의 높이예요.</p>
+        </div>
+        <div class="switches">
+          <label class="switch-row">
+            <span>손 관절 표시</span>
+            <input id="show-landmarks" type="checkbox" checked>
+          </label>
+          <label class="switch-row">
+            <span>파도 소리</span>
+            <input id="sound" type="checkbox">
+          </label>
+        </div>
+        <p class="privacy">카메라 영상은 이 브라우저에서 처리돼요.</p>
+      </aside>
+    </div>
+    <p id="notice" class="notice" role="status" hidden></p>
+  </main>
+
+  <video id="webcam" muted playsinline autoplay hidden></video>
+</body>
+</html>
